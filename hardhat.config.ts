@@ -9,7 +9,7 @@ const config: HardhatUserConfig = {
         tenderly: {
             url: process.env.TENDERLY_RPC_URL || "",
             accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-            chainId: Number(process.env.TENDERLY_CHAIN_ID || "1"),
+            chainId: Number(process.env.TENDERLY_CHAIN_ID || "9991"),
         },
     },
     paths: {

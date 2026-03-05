@@ -3,6 +3,5 @@ dist
 artifacts
 cache
 typechain-types
-deployment.json
 .env
 cre/.secrets.yaml
