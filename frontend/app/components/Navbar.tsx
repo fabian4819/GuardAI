@@ -1,12 +1,18 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useConnect, useAccount, useDisconnect } from "wagmi";
 import { injected } from "wagmi/connectors";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import { TabNavigation } from "./TabNavigation";
 
-export function Navbar() {
-  const [mounted, setMounted] = (require("react")).useState(false);
+interface NavbarProps {
+  activeTab?: number;
+  setActiveTab?: (tab: number) => void;
+}
+
+export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
+  const [mounted, setMounted] = useState(false);
   const navRef = useRef(null);
 
   useEffect(() => { 
@@ -67,6 +73,13 @@ export function Navbar() {
             )}
           </div>
         </div>
+        
+        {/* Tab Navigation */}
+        {activeTab !== undefined && setActiveTab && (
+          <div className="py-4">
+            <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+          </div>
+        )}
       </div>
     </nav>
   );

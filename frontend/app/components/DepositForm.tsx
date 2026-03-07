@@ -3,10 +3,15 @@ import { useState } from "react";
 import { useWriteContract, useReadContract, useAccount, useBalance } from "wagmi";
 import { parseUnits, formatUnits } from "viem";
 import { VAULT_ADDRESS, VAULT_ABI, ERC20_ABI, SUPPORTED_TOKENS } from "@/lib/contract";
+import { motion } from "framer-motion";
 
-export function DepositForm() {
+interface DepositFormProps {
+  preSelectedToken?: number;
+}
+
+export function DepositForm({ preSelectedToken }: DepositFormProps) {
   const { address } = useAccount();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(preSelectedToken ?? 0);
   const [amount, setAmount] = useState("1");
   const [approving, setApproving] = useState(false);
 
@@ -86,75 +91,183 @@ export function DepositForm() {
     : `Deposit ${token.symbol}`;
 
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-[2rem] p-6 space-y-5">
-      <div className="flex justify-between items-center px-1">
-        <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest">Add Protection</h3>
-        <span className="text-[10px] text-gray-700 font-mono">{token.symbol} Position</span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-xl border border-gray-800/50 rounded-4xl p-8 space-y-6 relative overflow-hidden"
+    >
+      {/* Animated background pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
       </div>
 
-      {/* Token Selector Tabs */}
-      <div className="flex p-1.5 bg-black/40 rounded-2xl border border-gray-800">
-        {SUPPORTED_TOKENS.map((t, i) => (
-          <button
-            key={t.symbol}
-            onClick={() => { setSelectedIndex(i); setAmount(t.isNative ? "1" : "100"); }}
-            className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all
-              ${i === selectedIndex
-                ? "bg-gray-800 text-white shadow-sm border border-gray-700"
-                : "text-gray-500 hover:text-gray-300"}`}
+      <div className="relative">
+        <div className="flex justify-between items-center px-2 mb-6">
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
           >
-            {t.symbol}
-          </button>
-        ))}
-      </div>
-
-      <div className="space-y-4">
-        {/* Input Card */}
-        <div className="bg-black/30 border border-gray-800 rounded-2xl p-4 transition-all focus-within:border-blue-600/50">
-          <div className="flex justify-between text-[10px] uppercase font-bold text-gray-600 mb-2">
-            <span>Deposit Amount</span>
-            <span>Wallet: {walletDisplay}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <input
-              type="number"
-              step={token.isNative ? "0.1" : "10"}
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full bg-transparent text-xl font-mono text-white outline-none placeholder:text-gray-800"
-              placeholder="0.00"
-            />
-            <span className="text-gray-400 font-bold">{token.symbol}</span>
-          </div>
+            <h3 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent uppercase tracking-widest">
+              Add Protection
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">Secure your assets with automated risk monitoring</p>
+          </motion.div>
+          <motion.div
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-[10px] text-gray-600 font-mono bg-gray-800/50 px-3 py-1 rounded-full"
+          >
+            {token.symbol} Position
+          </motion.div>
         </div>
 
-        {/* Vault Stats */}
-        <div className="flex items-center justify-between px-2 text-[10px] uppercase font-bold text-gray-600">
-          <span>Current Position</span>
-          <span className="text-blue-500">{vaultDisplay} {token.symbol}</span>
-        </div>
-
-        {/* CTA Button */}
-        <button
-          onClick={handleDeposit}
-          disabled={isBtnDisabled}
-          className={`w-full py-4 rounded-2xl font-bold transition-all relative overflow-hidden group
-            ${isBtnDisabled ? "bg-gray-800 text-gray-600 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-500 text-white shadow-xl shadow-blue-900/40"}`}
+        {/* Token Selector Tabs */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="flex p-2 bg-black/40 rounded-3xl border border-gray-800/50 mb-6"
         >
-          <span className="relative z-10">{buttonLabel}</span>
-          {!isBtnDisabled && (
-            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-white/40 transition-all" />
-          )}
-        </button>
+          {SUPPORTED_TOKENS.map((t, i) => (
+            <motion.button
+              key={t.symbol}
+              onClick={() => { setSelectedIndex(i); setAmount(t.isNative ? "1" : "100"); }}
+              className={`flex-1 py-3 px-4 rounded-2xl text-xs font-bold transition-all relative overflow-hidden ${
+                i === selectedIndex
+                  ? "text-white"
+                  : "text-gray-500 hover:text-gray-300"
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {i === selectedIndex && (
+                <motion.div
+                  layoutId="activeToken"
+                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <span className="relative z-10">{t.symbol}</span>
+            </motion.button>
+          ))}
+        </motion.div>
 
-        {!token.isNative && (
-          <div className="px-2">
-            <p className="text-[10px] text-gray-500 text-center leading-relaxed">
-              Whitelisted ERC20 deposit requires approval for the {VAULT_ADDRESS.slice(0,6)} contract.
-            </p>
-          </div>
-        )}
+        <div className="space-y-5">
+          {/* Input Card */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="bg-gradient-to-br from-black/40 to-black/20 border border-gray-800/50 rounded-3xl p-6 transition-all focus-within:border-blue-600/50 relative overflow-hidden group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            
+            <div className="relative">
+              <div className="flex justify-between text-[10px] uppercase font-bold text-gray-600 mb-3">
+                <span>Deposit Amount</span>
+                <motion.span
+                  key={walletDisplay}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-blue-400"
+                >
+                  Wallet: {walletDisplay}
+                </motion.span>
+              </div>
+              <div className="flex items-center gap-4">
+                <input
+                  type="number"
+                  step={token.isNative ? "0.1" : "10"}
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="w-full bg-transparent text-2xl font-mono text-white outline-none placeholder:text-gray-800"
+                  placeholder="0.00"
+                />
+                <motion.span
+                  key={token.symbol}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="text-gray-400 font-bold text-lg"
+                >
+                  {token.symbol}
+                </motion.span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Vault Stats */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl border border-blue-500/10"
+          >
+            <span className="text-[10px] uppercase font-bold text-gray-500">Current Position</span>
+            <motion.span
+              key={vaultDisplay}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-sm font-mono font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+            >
+              {vaultDisplay} {token.symbol}
+            </motion.span>
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.button
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            onClick={handleDeposit}
+            disabled={isBtnDisabled}
+            className={`w-full py-5 rounded-3xl font-bold text-lg transition-all relative overflow-hidden group ${
+              isBtnDisabled
+                ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl shadow-blue-900/40 hover:shadow-2xl hover:shadow-blue-900/60"
+            }`}
+            whileHover={!isBtnDisabled ? { scale: 1.02 } : {}}
+            whileTap={!isBtnDisabled ? { scale: 0.98 } : {}}
+          >
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              {buttonLabel}
+              {!isBtnDisabled && (
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  →
+                </motion.span>
+              )}
+            </span>
+            {!isBtnDisabled && (
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.5 }}
+              />
+            )}
+          </motion.button>
+
+          {!token.isNative && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="px-4 text-center"
+            >
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Whitelisted ERC20 deposit requires approval for the{" "}
+                <span className="text-blue-400 font-mono">{VAULT_ADDRESS.slice(0, 8)}...</span>{" "}
+                contract.
+              </p>
+            </motion.div>
+          )}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

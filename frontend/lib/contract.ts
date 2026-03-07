@@ -36,3 +36,33 @@ export const ERC20_ABI = parseAbi([
 ]);
 
 export const VAULT_STATES = ["🟢 ACTIVE", "🟡 GUARDED", "🔴 EMERGENCY"] as const;
+
+export const POOL_DATA = [
+  {
+    token: SUPPORTED_TOKENS[0], // ETH
+    tvl: "$1,200,000",
+    apy: "4.2%",
+    riskMultiplier: 0.8,
+    description: "Native Ethereum with lowest risk profile",
+    historicalApy: ["3.8%", "4.1%", "4.2%"],
+    icon: "💎",
+  },
+  {
+    token: SUPPORTED_TOKENS[1], // USDC
+    tvl: "$850,000",
+    apy: "8.1%",
+    riskMultiplier: 1.0,
+    description: "Stablecoin pool with moderate returns",
+    historicalApy: ["7.9%", "8.0%", "8.1%"],
+    icon: "💵",
+  },
+  {
+    token: SUPPORTED_TOKENS[2], // stETH
+    tvl: "$2,100,000",
+    apy: "12.4%",
+    riskMultiplier: 1.3,
+    description: "Liquid staking with highest yields",
+    historicalApy: ["11.8%", "12.1%", "12.4%"],
+    icon: "🔥",
+  },
+] as const;
