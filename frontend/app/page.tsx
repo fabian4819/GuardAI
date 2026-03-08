@@ -91,12 +91,19 @@ export default function Home() {
           {activeTab === 1 && (
             <motion.div
               key="pools"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
               className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24"
             >
+              <div className="text-center mb-20">
+                <span className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-[0.4em] mb-4 block">Available Assets</span>
+                <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-6">Protection Pools</h2>
+                <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+                  Choose from our autonomously monitored pools, each protected by real-time systemic risk analysis.
+                </p>
+              </div>
               <PoolsGrid onSelectPool={handlePoolSelect} riskScore={score} />
             </motion.div>
           )}
@@ -105,35 +112,19 @@ export default function Home() {
           {activeTab === 2 && (
             <motion.div
               key="deposit"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
               className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-24"
             >
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="text-center mb-12"
-              >
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6"
-                >
-                  <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                  <span className="text-sm text-blue-400 font-semibold">Secure Deposit</span>
-                </motion.div>
-                <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tight">
-                  <span className="bg-linear-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
-                    Secure Your Assets
-                  </span>
-                </h2>
-                <p className="text-gray-400 text-lg font-light">
+              <div className="text-center mb-16">
+                <span className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-[0.4em] mb-4 block">Secure Entry</span>
+                <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-6">Secure Your Assets</h2>
+                <p className="text-gray-500 text-lg leading-relaxed">
                   Deposit funds into autonomously monitored protection pools.
                 </p>
-              </motion.div>
+              </div>
               
               {isConnected && address ? (
                 <DepositForm preSelectedToken={preSelectedToken} />
@@ -141,25 +132,17 @@ export default function Home() {
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-12 text-center"
+                  className="bg-[#0a1518]/40 backdrop-blur-xl border border-white/5 rounded-3xl p-12 text-center"
                 >
-                  <motion.div
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="text-6xl mb-6"
-                  >
-                    🔒
-                  </motion.div>
-                  <h3 className="text-2xl font-bold mb-4">Connect Wallet Required</h3>
-                  <p className="text-gray-400">
+                  <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center mx-auto mb-6">
+                    <span className="text-2xl">🔒</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Connect Wallet Required</h3>
+                  <p className="text-gray-500 mb-8">
                     Please connect your wallet to deposit funds.
                   </p>
                 </motion.div>
               )}
-              
-              <div className="mt-8">
-                <ActionPanel vaultState={stateIndex} />
-              </div>
             </motion.div>
           )}
 
@@ -167,35 +150,19 @@ export default function Home() {
           {activeTab === 3 && (
             <motion.div
               key="portfolio"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="pt-24"
+              className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24"
             >
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="text-center mb-12"
-              >
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6"
-                >
-                  <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-                  <span className="text-sm text-purple-400 font-semibold">Your Assets</span>
-                </motion.div>
-                <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tight">
-                  <span className="bg-linear-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
-                    Your Portfolio
-                  </span>
-                </h2>
-                <p className="text-gray-400 text-lg font-light">
+              <div className="text-center mb-16">
+                <span className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-[0.4em] mb-4 block">Asset Overview</span>
+                <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-6">Your Portfolio</h2>
+                <p className="text-gray-500 text-lg leading-relaxed">
                   Track your protected assets and vault status in real-time.
                 </p>
-              </motion.div>
+              </div>
 
               {isConnected && address ? (
                 <Portfolio address={address} vaultState={stateIndex} />
@@ -203,17 +170,13 @@ export default function Home() {
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="max-w-2xl mx-auto bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-12 text-center"
+                  className="max-w-2xl mx-auto bg-[#0a1518]/40 backdrop-blur-xl border border-white/5 rounded-3xl p-12 text-center"
                 >
-                  <motion.div
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="text-6xl mb-6"
-                  >
-                    👛
-                  </motion.div>
-                  <h3 className="text-2xl font-bold mb-4">No Wallet Connected</h3>
-                  <p className="text-gray-400">
+                  <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center mx-auto mb-6">
+                    <span className="text-2xl">👛</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">No Wallet Connected</h3>
+                  <p className="text-gray-500">
                     Connect your wallet to view your portfolio.
                   </p>
                 </motion.div>
