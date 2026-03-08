@@ -1,0 +1,12 @@
+{
+  "schedule": "*/60 * * * * *",
+  "vaultSentinelAddress": "0xd5474D48fb3DB3CF012D4D3fAad8bf3aE409E450",
+  "chainName": "ethereum-mainnet",
+  "gasLimit": "500000",
+  "riskThreshold": 70,
+  "ethPriceFeedAddress": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+  "priceBaseline": 3500,
+  "lidoTvlBaseline": 10000000000,
+  "aaveTvlBaseline": 8000000000,
+  "makerTvlBaseline": 6000000000
+}

@@ -1,0 +1,29 @@
+# ==========================================================================
+# CRE WORKFLOW SETTINGS FILE — systemic-risk-monitor
+# ==========================================================================
+# Workflow-specific settings for CRE CLI targets.
+# Target "tenderly-settings" points to the Tenderly VNet fork (chain ID 9991).
+
+tenderly-settings:
+  user-workflow:
+    workflow-name: "vault-sentinel-risk-monitor"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.json"
+    secrets-path: "../secrets.yaml"
+
+staging-settings:
+  user-workflow:
+    workflow-name: "vault-sentinel-risk-monitor"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.json"
+    secrets-path: "../secrets.yaml"
+
+production-settings:
+  user-workflow:
+    workflow-name: "vault-sentinel-risk-monitor"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.json"
+    secrets-path: "../secrets.yaml"
