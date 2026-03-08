@@ -3,25 +3,21 @@ import { motion } from "framer-motion";
 
 const features = [
   {
-    icon: "📈",
     name: "ETH/USD Feed",
     desc: "Uses Chainlink Data Feeds to monitor price volatility and flash crashes in real-time.",
     weight: "30%"
   },
   {
-    icon: "💧",
     name: "Lido Health",
     desc: "Tracks TVL drains in the largest ETH staking protocol to detect exit-liquidity panics.",
     weight: "25%"
   },
   {
-    icon: "🏦",
     name: "Aave Markets",
     desc: "Monitors borrowing rates and liquidity spikes that precede large-scale liquidations.",
     weight: "25%"
   },
   {
-    icon: "🛡️",
     name: "MakerDAO Stability",
     desc: "Detects systemic backing risks by monitoring TVL changes in the DAI engine.",
     weight: "20%"
@@ -66,9 +62,8 @@ export function SystemicRiskFeatures() {
               whileHover={{ y: -5, borderColor: "rgba(59, 130, 246, 0.5)" }}
               className="bg-gray-900/50 p-8 rounded-3xl border border-gray-800 transition-all group relative"
             >
-              <div className="text-4xl mb-6 transform group-hover:scale-110 transition-transform">{f.icon}</div>
               <h4 className="text-xl font-bold text-white mb-3">{f.name}</h4>
-              <p className="text-sm text-gray-500 mb-6 leading-relaxed min-h-[60px]">{f.desc}</p>
+              <p className="text-sm text-gray-500 mb-6 leading-relaxed min-h-15">{f.desc}</p>
               
               <div className="mt-auto pt-6 border-t border-gray-800/50 flex justify-between items-center">
                 <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Signal Weight</span>

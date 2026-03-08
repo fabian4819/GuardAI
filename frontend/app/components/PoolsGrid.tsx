@@ -82,33 +82,17 @@ export function PoolsGrid({ onSelectPool, riskScore }: PoolsGridProps) {
                 </div>
 
                 <div className="relative">
-                  {/* Icon and Title */}
+                  {/* Title */}
                   <motion.div
-                    className="flex items-center gap-4 mb-6"
+                    className="mb-6"
                     whileHover={{ x: 5 }}
                   >
-                    <motion.div
-                      className="text-5xl"
-                      animate={{
-                        rotate: [0, 10, -10, 0],
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: index * 0.5
-                      }}
-                    >
-                      {pool.icon}
-                    </motion.div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-white mb-1">
-                        {pool.token.symbol}
-                      </h3>
-                      <p className="text-xs text-gray-500 uppercase tracking-wider">
-                        {pool.token.label}
-                      </p>
-                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-1">
+                      {pool.token.symbol}
+                    </h3>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">
+                      {pool.token.label}
+                    </p>
                   </motion.div>
 
                   {/* Stats Grid */}

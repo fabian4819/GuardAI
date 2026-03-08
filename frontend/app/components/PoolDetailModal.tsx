@@ -57,16 +57,13 @@ export function PoolDetailModal({
               </button>
 
               {/* Header */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className="text-6xl">{pool.icon}</div>
-                <div>
-                  <h2 className="text-3xl font-black text-white mb-1">
-                    {pool.token.symbol} Pool
-                  </h2>
-                  <p className="text-gray-500 text-sm uppercase tracking-wider">
-                    {pool.token.label}
-                  </p>
-                </div>
+              <div className="mb-6">
+                <h2 className="text-3xl font-black text-white mb-1">
+                  {pool.token.symbol} Pool
+                </h2>
+                <p className="text-gray-500 text-sm uppercase tracking-wider">
+                  {pool.token.label}
+                </p>
               </div>
 
               {/* Description */}

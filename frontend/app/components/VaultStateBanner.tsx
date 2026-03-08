@@ -15,21 +15,18 @@ export function VaultStateBanner({ vaultState }: VaultStateBannerProps) {
       bg: "from-green-900/20 to-emerald-900/10",
       border: "border-green-700/50",
       text: "text-green-400",
-      icon: "🛡️",
       glow: "shadow-green-900/20"
     },
     1: {
       bg: "from-yellow-900/20 to-orange-900/10",
       border: "border-yellow-700/50",
       text: "text-yellow-400",
-      icon: "⚠️",
       glow: "shadow-yellow-900/20"
     },
     2: {
       bg: "from-red-900/20 to-pink-900/10",
       border: "border-red-700/50",
       text: "text-red-400",
-      icon: "🚨",
       glow: "shadow-red-900/20"
     },
   };
@@ -69,23 +66,24 @@ export function VaultStateBanner({ vaultState }: VaultStateBannerProps) {
 
         <div className="relative flex items-start gap-5">
           <motion.div
-            className={`text-4xl ${color.text}`}
+            className={`w-3 h-3 rounded-full ${color.text} bg-current`}
             animate={
               stateIndex === 2
                 ? {
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.5, 1],
+                    opacity: [1, 0.5, 1],
                   }
-                : {}
+                : {
+                    scale: [1, 1.2, 1],
+                    opacity: [0.7, 1, 0.7],
+                  }
             }
             transition={{
-              duration: 1,
-              repeat: stateIndex === 2 ? Infinity : 0,
+              duration: stateIndex === 2 ? 0.8 : 2,
+              repeat: Infinity,
               ease: "easeInOut"
             }}
-          >
-            {color.icon}
-          </motion.div>
+          />
           
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-3">
