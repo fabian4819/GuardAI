@@ -42,7 +42,7 @@ export function PoolsGrid({ onSelectPool, riskScore }: PoolsGridProps) {
                   <div className="space-y-6 mb-10">
                     <div className="flex justify-between items-end">
                       <span className="text-[10px] text-gray-600 uppercase tracking-widest font-bold">Target APY</span>
-                      <span className="text-xl font-bold text-white">{pool.apy}%</span>
+                      <span className="text-xl font-bold text-white">{pool.apy}</span>
                     </div>
                     <div className="flex justify-between items-end">
                       <span className="text-[10px] text-gray-600 uppercase tracking-widest font-bold">TVL</span>

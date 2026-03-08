@@ -72,7 +72,7 @@ export function PoolDetailModal({
                     <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold mb-1">
                       Target APY
                     </p>
-                    <p className="text-lg font-bold text-white">{pool.apy}%</p>
+                    <p className="text-lg font-bold text-white">{pool.apy}</p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-4 border border-white/5">
                     <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold mb-1">
