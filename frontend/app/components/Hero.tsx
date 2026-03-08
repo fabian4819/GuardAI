@@ -1,26 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function Hero() {
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLElement>(null);
-  const blob1Ref = useRef<HTMLDivElement>(null);
-  const blob2Ref = useRef<HTMLDivElement>(null);
-  const blob3Ref = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
-
-  // Enhanced parallax with spring physics
-  const y1 = useSpring(useTransform(scrollY, [0, 500], [0, 200]), { stiffness: 100, damping: 30 });
-  const y2 = useSpring(useTransform(scrollY, [0, 500], [0, -150]), { stiffness: 100, damping: 30 });
-  const y3 = useSpring(useTransform(scrollY, [0, 500], [0, 100]), { stiffness: 80, damping: 25 });
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
 
   useEffect(() => {
     setMounted(true);
@@ -30,95 +14,47 @@ export function Hero() {
     if (!mounted || !containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Enhanced floating blobs with complex paths
-      gsap.to(blob1Ref.current, {
-        x: '+=80',
-        y: '+=50',
-        scale: 1.2,
-        rotation: 180,
-        duration: 12,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-      
-      gsap.to(blob2Ref.current, {
-        x: '-=60',
-        y: '-=80',
-        scale: 0.8,
-        rotation: -180,
-        duration: 15,
+      // Glow animation
+      gsap.to(".glow-effect", {
+        opacity: 0.8,
+        duration: 2,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut"
       });
 
-      gsap.to(blob3Ref.current, {
-        x: '+=40',
-        y: '-=30',
-        scale: 1.1,
-        rotation: 90,
-        duration: 10,
+      // Floating animation for cards
+      gsap.to(".floating-card", {
+        y: -20,
+        duration: 3,
         repeat: -1,
         yoyo: true,
-        ease: "sine.inOut"
+        ease: "sine.inOut",
+        stagger: 0.2
       });
 
-      // Text reveal with stagger
+      // Title reveal
       gsap.from(".hero-title", {
-        y: 100,
+        y: 40,
         opacity: 0,
-        duration: 1.5,
-        ease: "power4.out",
-        stagger: 0.1
-      });
-      
-      gsap.from(".hero-subtitle", {
-        opacity: 0,
-        y: 30,
-        duration: 1.2,
-        delay: 0.5,
+        duration: 1,
         ease: "power3.out"
       });
 
       gsap.from(".hero-description", {
-        opacity: 0,
         y: 20,
+        opacity: 0,
         duration: 1,
-        delay: 0.8,
-        ease: "power2.out"
-      });
-
-      gsap.from(".hero-cta", {
-        opacity: 0,
-        scale: 0.9,
-        y: 20,
-        duration: 0.8,
-        delay: 1,
-        stagger: 0.15,
-        ease: "back.out(1.7)"
-      });
-
-      // Stats counter animation
-      gsap.from(".hero-stat", {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        delay: 1.2,
-        stagger: 0.1,
+        delay: 0.3,
         ease: "power3.out"
       });
 
-      // ScrollTrigger for fade out
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        onUpdate: (self) => {
-          if (containerRef.current) {
-            containerRef.current.style.opacity = (1 - self.progress * 1.5).toString();
-          }
-        }
+      gsap.from(".hero-cta", {
+        y: 20,
+        opacity: 0,
+        duration: 1,
+        delay: 0.5,
+        ease: "power3.out"
       });
     }, containerRef);
 
@@ -128,185 +64,131 @@ export function Hero() {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#020608]"
     >
-      {/* Animated Background Blobs - Enhanced */}
-      <motion.div 
-        ref={blob1Ref}
-        style={{ y: y1, opacity, scale }}
-        className="absolute top-20 left-10 w-125 h-125 bg-linear-to-br from-blue-600/30 via-purple-600/20 to-transparent rounded-full blur-[150px] mix-blend-screen"
-      />
-      <motion.div 
-        ref={blob2Ref}
-        style={{ y: y2, opacity, scale }}
-        className="absolute bottom-20 right-10 w-112.5 h-112.5 bg-linear-to-tl from-indigo-600/25 via-pink-600/20 to-transparent rounded-full blur-[120px] mix-blend-screen"
-      />
-      <motion.div 
-        ref={blob3Ref}
-        style={{ y: y3, opacity, scale }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-100 h-100 bg-linear-to-r from-cyan-600/20 via-blue-600/15 to-transparent rounded-full blur-[100px] mix-blend-screen"
-      />
-
-      {/* Particle System */}
-      <div 
-        ref={particlesRef}
-        className="absolute inset-0 overflow-hidden pointer-events-none"
-      >
-        <AnimatePresence>
-          {mounted && [...Array(30)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
-              style={{
-                left: `${(i * 13.7) % 100}%`,
-                top: `${(i * 21.3) % 100}%`,
-              }}
-              animate={{
-                y: [0, -100, 0],
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 3 + (i % 4),
-                repeat: Infinity,
-                delay: (i % 10) * 0.2,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </AnimatePresence>
+      {/* Background Neon Glows */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-250 h-150 bg-emerald-500/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-300 h-200 bg-emerald-500/20 blur-[150px] rounded-full glow-effect" />
       </div>
 
-      {/* Animated Grid Pattern */}
-      <motion.div 
-        style={{ opacity, scale }}
-        className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-size-[64px_64px]"
-        animate={{
-          backgroundPosition: ['0px 0px', '64px 64px'],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-
-      {/* Radial Gradient Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_70%)]" />
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(#10b981_0.5px,transparent_0.5px)] bg-size-[32px_32px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_20%,transparent_100%)] opacity-20" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 text-center pt-24">
-        {/* Badge */}
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-8"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-linear-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 backdrop-blur-sm"
-          >
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
-            </span>
-            <span className="text-sm text-blue-300 font-semibold tracking-wide">Chainlink Convergence 2026</span>
-          </motion.div>
-        </motion.div>
-
+      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center pt-32">
         {/* Main Title */}
-        <h1 className="hero-title text-6xl md:text-8xl font-black mb-6 leading-tight tracking-tight whitespace-nowrap">
-          <span className="text-white">Guard</span>
-          <span className="text-blue-500">AI</span>
+        <h1 className="hero-title text-6xl md:text-[140px] font-black mb-8 leading-none tracking-tighter text-white opacity-90 blur-[0.5px]">
+          Guard<span className="text-emerald-500">AI</span>
         </h1>
 
         {/* Subtitle */}
-        <motion.p
-          className="hero-subtitle text-xl md:text-2xl text-gray-400 mb-6 max-w-3xl mx-auto leading-relaxed font-normal"
-        >
-          Autonomous Risk Detection &{" "}
-          <span className="text-white">Automated Fund Protection</span>
-        </motion.p>
+        <p className="hero-subtitle text-2xl md:text-3xl font-bold text-[#e2e8f0] mb-6 tracking-tight">
+          Autonomous Risk Detection & <span className="opacity-60 text-emerald-400">Automated Fund Protection</span>
+        </p>
 
         {/* Description */}
-        <motion.p
-          className="hero-description text-base text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed"
-        >
+        <p className="hero-description text-lg md:text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed">
           Powered by Chainlink Functions and CRE Workflows. Protect your DeFi assets 
           with real-time risk monitoring and instant autonomous response.
-        </motion.p>
+        </p>
 
-        {/* CTA Buttons */}
-        <div className="hero-cta flex flex-wrap justify-center gap-4 mb-16">
-          <motion.button
-            whileHover={{ scale: 1.02, backgroundColor: "#3b82f6" }}
-            whileTap={{ scale: 0.98 }}
-            className="group relative px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-base transition-all"
-          >
-            Launch App
-          </motion.button>
-          
-          <motion.button
-            whileHover={{ backgroundColor: "rgba(255,255,255,0.05)" }}
-            whileTap={{ scale: 0.98 }}
-            className="px-8 py-4 bg-transparent text-gray-400 rounded-xl font-bold text-base transition-all border border-gray-800"
-          >
-            Documentation
-          </motion.button>
+        {/* Bottom Cards Visualization */}
+        <div className="relative w-full max-w-4xl mx-auto h-100">
+          {/* Main Dashboard Card */}
+          <div className="floating-card absolute left-1/2 -translate-x-1/2 top-0 w-full max-w-md aspect-4/3 bg-[#0a1518] rounded-3xl border border-emerald-500/30 p-8 shadow-[0_0_50px_rgba(16,185,129,0.15)] z-20 overflow-hidden">
+            <div className="flex flex-col h-full">
+              <span className="text-gray-400 text-sm mb-2">Current Balance</span>
+              <span className="text-3xl font-bold text-white mb-8">$ 44,128.94</span>
+              
+              <div className="flex gap-4 mb-auto">
+                <div className="flex-1 p-3 rounded-xl bg-white/5 border border-white/10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full bg-blue-500/20" />
+                    <span className="text-xs text-gray-400 uppercase">Tezos</span>
+                  </div>
+                  <div className="text-lg font-bold text-white">$ 5,148.42</div>
+                  <div className="w-full h-1 bg-white/10 rounded-full mt-2 overflow-hidden">
+                    <div className="h-full bg-emerald-500 w-[53%]" />
+                  </div>
+                </div>
+                <div className="flex-1 p-3 rounded-xl bg-white/5 border border-white/10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full bg-gray-500/20" />
+                    <span className="text-xs text-gray-400 uppercase">Ethereum</span>
+                  </div>
+                  <div className="text-lg font-bold text-white">$ 5,148.42</div>
+                  <div className="w-full h-1 bg-white/10 rounded-full mt-2 overflow-hidden">
+                    <div className="h-full bg-emerald-500 w-[22%]" />
+                  </div>
+                </div>
+              </div>
+
+              <button className="w-full py-3 bg-emerald-500/10 text-emerald-400 font-semibold rounded-xl border border-emerald-500/20 mt-6">
+                Deposit
+              </button>
+            </div>
+            
+            {/* Background Lines in card */}
+            <div className="absolute bottom-0 left-0 w-full h-25 bg-linear-to-t from-emerald-500/10 to-transparent pointer-events-none" />
+          </div>
+
+          {/* Left Side Card */}
+          <div className="floating-card absolute left-[-10%] top-20 w-70 aspect-4/3 bg-[#0a1518]/80 backdrop-blur-xl rounded-2xl border border-white/10 p-6 z-10 -rotate-12 opacity-60">
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-gray-400 text-sm">Ethereum</span>
+              <span className="text-xs text-gray-500">7 days ∨</span>
+            </div>
+            <div className="text-2xl font-bold text-white mb-4">47,384</div>
+            <div className="h-20 w-full flex items-end gap-1">
+              {[40, 70, 45, 90, 65, 80, 55].map((h, i) => (
+                <div key={i} className="flex-1 bg-emerald-500/20 rounded-t-sm" style={{ height: `${h}%` } as React.CSSProperties} />
+              ))}
+            </div>
+          </div>
+
+          {/* Right Side Card */}
+          <div className="floating-card absolute right-[-10%] top-20 w-70 aspect-4/3 bg-[#0a1518]/80 backdrop-blur-xl rounded-2xl border border-white/10 p-6 z-10 rotate-12 opacity-60">
+            <div className="flex justify-between items-center mb-6">
+              <span className="text-gray-400 text-sm">Quick Swap</span>
+              <div className="w-6 h-6 rounded-full bg-white/10" />
+            </div>
+            <div className="space-y-4">
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-500">Send</span>
+                <span className="text-white">1,545</span>
+              </div>
+              <div className="w-full h-px bg-white/10" />
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-500">Received</span>
+                <span className="text-white">10,741.59</span>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <div className="w-12 h-12 rounded-full border border-emerald-500/50 flex items-center justify-center text-emerald-500">
+                ↺
+              </div>
+            </div>
+          </div>
+
+          {/* Perspective Streaks */}
+          <div className="absolute -bottom-37.5 left-1/2 -translate-x-1/2 w-300 h-100 pointer-events-none">
+            <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_0%,transparent_0deg,rgba(16,185,129,0.3)_180deg,transparent_360deg)] opacity-40 blur-3xl rotate-180" />
+            <div className="absolute top-0 left-0 w-full h-full flex justify-around px-40">
+              {[...Array(8)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="w-px h-full bg-linear-to-t from-emerald-500/40 via-emerald-500/5 to-transparent origin-top"
+                  style={{ transform: `rotate(${(i - 3.5) * 15}deg)` } as React.CSSProperties}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
-        >
-          {[
-            { value: "$2.5M+", label: "TVL Protected", color: "from-blue-400 to-cyan-400" },
-            { value: "150+", label: "Active Users", color: "from-purple-400 to-pink-400" },
-            { value: "<50ms", label: "Response Time", color: "from-green-400 to-emerald-400" },
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              className="hero-stat p-6 rounded-3xl bg-linear-to-br from-white/5 to-white/2 border border-white/10 backdrop-blur-sm"
-              whileHover={{ 
-                scale: 1.05,
-                backgroundColor: "rgba(255,255,255,0.08)"
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <p className={`text-5xl font-black mb-2 bg-linear-to-r ${stat.color} bg-clip-text text-transparent`}>
-                {stat.value}
-              </p>
-              <p className="text-sm text-gray-400 uppercase tracking-widest font-semibold">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
 
-      {/* Enhanced Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 15, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2"
-        >
-          <span className="text-xs text-gray-500 uppercase tracking-widest">Scroll</span>
-          <div className="w-6 h-10 rounded-full border-2 border-gray-600 flex items-start justify-center p-2">
-            <motion.div
-              animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1.5 h-3 rounded-full bg-linear-to-b from-blue-400 to-purple-400"
-            />
-          </div>
-        </motion.div>
-      </motion.div>
+      {/* Hero Scroll indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-px h-12 bg-linear-to-b from-emerald-500/50 to-transparent" />
     </section>
   );
 }
