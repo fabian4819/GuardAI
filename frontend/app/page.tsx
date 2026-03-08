@@ -95,7 +95,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24"
+              className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-32"
             >
               <div className="text-center mb-20">
                 <span className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-[0.4em] mb-4 block">Available Assets</span>
@@ -116,7 +116,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-24"
+              className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-32"
             >
               <div className="text-center mb-16">
                 <span className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-[0.4em] mb-4 block">Secure Entry</span>
@@ -154,7 +154,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24"
+              className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-32"
             >
               <div className="text-center mb-16">
                 <span className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-[0.4em] mb-4 block">Asset Overview</span>
@@ -165,7 +165,7 @@ export default function Home() {
               </div>
 
               {isConnected && address ? (
-                <Portfolio address={address} vaultState={stateIndex} />
+                <Portfolio address={address} />
               ) : (
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
