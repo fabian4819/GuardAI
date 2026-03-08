@@ -67,53 +67,67 @@ export function PoolDetailModal({
                 </div>
 
                 {/* Key Metrics */}
-                <div className="grid grid-cols-2 gap-3 mb-8">
-                  <div className="bg-white/5 rounded-xl p-5 border border-white/5">
-                    <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold mb-1.5">
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+                    <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold mb-1">
                       Target APY
                     </p>
-                    <p className="text-xl font-bold text-white">{pool.apy}%</p>
+                    <p className="text-lg font-bold text-white">{pool.apy}%</p>
                   </div>
-                  <div className="bg-white/5 rounded-xl p-5 border border-white/5">
-                    <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold mb-1.5">
+                  <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+                    <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold mb-1">
                       Risk Rating
                     </p>
                     <div className="flex items-center gap-2">
                       <div className={`w-1 h-1 rounded-full ${calculatedRisk < 30 ? "bg-emerald-500" : calculatedRisk < 70 ? "bg-yellow-500" : "bg-red-500"}`} />
-                      <p className={`text-xl font-bold ${calculatedRisk < 30 ? "text-emerald-400" : calculatedRisk < 70 ? "text-yellow-400" : "text-red-400"}`}>
+                      <p className={`text-lg font-bold ${calculatedRisk < 30 ? "text-emerald-400" : calculatedRisk < 70 ? "text-yellow-400" : "text-red-400"}`}>
                         {calculatedRisk}%
                       </p>
                     </div>
                   </div>
                 </div>
 
+                {/* Detailed Analysis Section */}
+                <div className="space-y-6 mb-8">
+                  <div>
+                    <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-3 block">Risk Breakdown</span>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-[10px] text-gray-600">Base Risk</span>
+                        <span className="text-[10px] font-mono text-white">{riskScore}/100</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-[10px] text-gray-600">Multiplier</span>
+                        <span className="text-[10px] font-mono text-white">{pool.riskMultiplier}x</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-[10px] text-gray-600">Volatility</span>
+                        <span className="text-[10px] font-mono text-emerald-500/50">Low</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-[10px] text-gray-600">Liquidity</span>
+                        <span className="text-[10px] font-mono text-emerald-500/50">High</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* System Info */}
-                <div className="space-y-3 mb-10">
+                <div className="space-y-3 mb-8">
                   <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-widest">
                     <span className="text-gray-600">Liquidity Depth</span>
                     <span className="text-white">{pool.tvl}</span>
-                  </div>
-                  <div className="w-full h-px bg-white/5" />
-                  <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-widest">
-                    <span className="text-gray-600">Protection Layer</span>
-                    <span className="text-emerald-500/50">Chainlink CRE v2</span>
                   </div>
                 </div>
 
                 {/* CTA */}
                 <div className="flex gap-3">
                   <button
-                    onClick={onClose}
-                    className="flex-1 py-4 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 font-bold text-[10px] uppercase tracking-[0.2em] transition-all duration-500"
-                  >
-                    Cancel
-                  </button>
-                  <button
                     onClick={() => {
                       onDeposit(poolIndex);
                       onClose();
                     }}
-                    className="flex-2 py-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-500 shadow-[0_0_20px_rgba(16,185,129,0.1)]"
+                    className="w-full py-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-500 shadow-[0_0_20px_rgba(16,185,129,0.1)]"
                   >
                     Initialize Deposit
                   </button>
