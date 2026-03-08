@@ -63,7 +63,7 @@ export default function Home() {
 
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       
-      <main className="relative pt-0 pb-32">
+      <main className="relative pt-0 pb-0">
         <AnimatePresence mode="wait">
           {/* Tab 0: Home */}
           {activeTab === 0 && (
@@ -232,7 +232,7 @@ export default function Home() {
         riskScore={score}
       />
 
-      <footer className="relative py-24 overflow-hidden">
+      <footer className="relative py-12 overflow-hidden">
         {/* Top Border Gradient */}
         <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
         
