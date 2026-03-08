@@ -4,81 +4,123 @@ import { motion, AnimatePresence } from "framer-motion";
 export function RiskGauge({ score }: { score: number }) {
   const percentage = Math.min(100, Math.max(0, score));
 
-  // Determine color based on risk score
-  const getBarColor = () => {
-    if (percentage >= 70) return "bg-red-500 shadow-[0_0_25px_rgba(239,68,68,0.6)]";
-    if (percentage >= 40) return "bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.4)]";
-    return "bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.4)]";
-  };
-
-  const getTextColor = () => {
-    if (percentage >= 70) return "text-red-500";
-    if (percentage >= 40) return "text-yellow-500";
-    return "text-blue-500";
-  };
-
   return (
-    <div className="w-full space-y-8">
-      <div className="flex justify-between items-end">
-        <div className="flex items-baseline gap-1">
-          <motion.span 
-            key={score}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className={`text-7xl font-black font-mono tracking-tighter ${getTextColor()}`}
-          >
-            {percentage}
-          </motion.span>
-          <span className="text-gray-600 font-black text-2xl">/100</span>
-        </div>
-        
-        <div className="text-right">
-          <p className="text-[10px] font-black text-gray-700 uppercase tracking-[0.2em] leading-none mb-2">Live Risk Rating</p>
-          <AnimatePresence mode="wait">
-            <motion.span 
-              key={percentage >= 70 ? "red" : percentage >= 40 ? "yellow" : "blue"}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.2 }}
-              className={`text-sm font-black uppercase tracking-widest px-3 py-1 rounded border ${getTextColor()} ${percentage >= 70 ? "border-red-500/50" : percentage >= 40 ? "border-yellow-500/50" : "border-blue-500/50"}`}
-            >
-              {percentage >= 70 ? "Critical Danger" : percentage >= 40 ? "Elevated Alert" : "Stable Health"}
-            </motion.span>
-          </AnimatePresence>
-        </div>
-      </div>
+    <div className="w-full py-20 relative">
+      {/* Background Glow for the Gauge Area */}
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 blur-[120px] opacity-20 pointer-events-none transition-colors duration-1000 ${percentage >= 70 ? "bg-red-500" : percentage >= 40 ? "bg-yellow-500" : "bg-emerald-500"}`} />
 
-      <div className="relative h-6 w-full bg-gray-950 rounded-full overflow-hidden border border-gray-800 shadow-inner">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${percentage}%` }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className={`absolute top-0 left-0 h-full rounded-full transition-colors duration-500 ${getBarColor()}`}
-        >
-          {/* Animated Sheen */}
-          <motion.div 
-            animate={{ x: ['-100%', '200%'] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg]"
-          />
-        </motion.div>
-        
-        {/* Threshold Mark */}
-        <div className="absolute top-0 left-[70%] h-full w-[2px] bg-red-500/50 z-10 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
-        <div className="absolute top-0 right-0 h-full w-[30%] bg-red-500/5 z-0" />
-      </div>
-
-      <div className="flex justify-between px-1">
-        <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Safe Ops</span>
-        <div className="flex items-center gap-2">
-           <motion.div 
-             animate={{ opacity: [0.3, 1, 0.3] }}
-             transition={{ duration: 2, repeat: Infinity }}
-             className="w-2 h-2 rounded-full bg-blue-500" 
-           />
-           <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Auto-Sweep Threshold: 70</span>
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <div className="flex flex-col items-center text-center mb-16">
+          <span className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-[0.4em] mb-4 block">Verifiable Risk Metric</span>
+          <h2 className="text-4xl font-bold text-white tracking-tight mb-2">Systemic Health Index</h2>
+          <p className="text-gray-500 text-sm max-w-md">Verifying real-time protocol health across multiple liquidity layers.</p>
         </div>
-        <span className="text-[10px] font-black text-red-900 uppercase tracking-widest">System Failure</span>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          {/* Left Side: Status Info */}
+          <div className="order-2 md:order-1 space-y-8">
+            <div className="p-6 bg-[#0a1518]/40 backdrop-blur-xl rounded-2xl border border-white/5">
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 block">Current Status</span>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={percentage >= 70 ? "danger" : percentage >= 40 ? "alert" : "healthy"}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  className="flex items-center gap-3"
+                >
+                  <div className={`w-2 h-2 rounded-full animate-pulse ${percentage >= 70 ? "bg-red-500 shadow-[0_0_10px_#ef4444]" : percentage >= 40 ? "bg-yellow-500 shadow-[0_0_10px_#eab308]" : "bg-emerald-500 shadow-[0_0_10px_#10b981]"}`} />
+                  <span className={`text-lg font-bold tracking-tight ${percentage >= 70 ? "text-red-400" : percentage >= 40 ? "text-yellow-400" : "text-emerald-400"}`}>
+                    {percentage >= 70 ? "Critical Risk" : percentage >= 40 ? "Elevated Alert" : "System Healthy"}
+                  </span>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            
+            <div className="px-2">
+              <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-2 block">Auto-Sweep Protocol</span>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Threshold set at <span className="text-white font-mono">70/100</span>. Automated withdrawal triggers upon breach.
+              </p>
+            </div>
+          </div>
+
+          {/* Center: Large Score */}
+          <div className="order-1 md:order-2 flex flex-col items-center justify-center relative py-10">
+            <div className="relative">
+              {/* Circular Progress Background */}
+              <svg className="w-48 h-48 -rotate-90">
+                <circle
+                  cx="96"
+                  cy="96"
+                  r="88"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="text-white/5"
+                />
+                <motion.circle
+                  cx="96"
+                  cy="96"
+                  r="88"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeDasharray="552.92"
+                  initial={{ strokeDashoffset: 552.92 }}
+                  animate={{ strokeDashoffset: 552.92 - (552.92 * percentage) / 100 }}
+                  transition={{ duration: 2, ease: "circOut" }}
+                  className={percentage >= 70 ? "text-red-500" : percentage >= 40 ? "text-yellow-500" : "text-emerald-500"}
+                />
+              </svg>
+              
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <motion.span 
+                  key={score}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="text-6xl font-black tracking-tighter text-white"
+                >
+                  {percentage}
+                </motion.span>
+                <span className="text-gray-600 font-bold text-sm uppercase tracking-widest -mt-1">Score</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side: Metrics */}
+          <div className="order-3 space-y-6">
+            <div className="space-y-4">
+              <div>
+                <div className="flex justify-between text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">
+                  <span>Volatility</span>
+                  <span className="text-white">Low</span>
+                </div>
+                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-500/30 w-[20%]" />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">
+                  <span>Liquidity</span>
+                  <span className="text-white">Stable</span>
+                </div>
+                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-500/30 w-[85%]" />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">
+                  <span>De-peg Risk</span>
+                  <span className="text-white">Minimal</span>
+                </div>
+                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-500/30 w-[5%]" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

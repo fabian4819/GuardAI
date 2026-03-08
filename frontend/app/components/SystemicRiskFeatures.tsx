@@ -26,51 +26,40 @@ const features = [
 
 export function SystemicRiskFeatures() {
   return (
-    <section className="py-16 bg-gray-950/20 rounded-[3rem] border border-gray-800/50 my-10 relative overflow-hidden backdrop-blur-sm">
-      {/* Decorative SVG Pattern */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <svg width="100%" height="100%">
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1"/>
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </div>
-
+    <section className="py-24 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 relative">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-20"
         >
-          <h3 className="text-3xl font-bold text-white mb-3">Multi-Protocol Risk Engine</h3>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            The Chainlink CRE workflow continuously aggregates multiple on-chain health signals 
-            to produce a verifiable safety verdict.
+          <span className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-[0.3em] mb-4 block">Engine Architecture</span>
+          <h3 className="text-4xl font-bold text-white mb-4 tracking-tight">Multi-Protocol Risk Monitoring</h3>
+          <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+            Verifiable health signals aggregated via Chainlink CRE workflows.
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {features.map((f, i) => (
             <motion.div 
               key={f.name}
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -5, borderColor: "rgba(59, 130, 246, 0.5)" }}
-              className="bg-gray-900/50 p-8 rounded-3xl border border-gray-800 transition-all group relative"
+              className="bg-[#0a1518]/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 hover:border-emerald-500/20 transition-all group"
             >
-              <h4 className="text-xl font-bold text-white mb-3">{f.name}</h4>
-              <p className="text-sm text-gray-500 mb-6 leading-relaxed min-h-15">{f.desc}</p>
-              
-              <div className="mt-auto pt-6 border-t border-gray-800/50 flex justify-between items-center">
-                <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Signal Weight</span>
-                <span className="text-sm font-mono font-bold text-blue-400 bg-blue-900/20 px-3 py-1 rounded-full">
-                  {f.weight}
+              <div className="flex justify-between items-start mb-6">
+                <h4 className="text-xl font-bold text-white tracking-tight">{f.name}</h4>
+                <span className="text-[10px] font-mono font-bold text-emerald-500/50 bg-emerald-500/5 px-3 py-1 rounded-full border border-emerald-500/10">
+                  WEIGHT: {f.weight}
                 </span>
               </div>
+              <p className="text-gray-500 leading-relaxed text-sm">
+                {f.desc}
+              </p>
             </motion.div>
           ))}
         </div>

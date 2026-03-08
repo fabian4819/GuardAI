@@ -131,13 +131,6 @@ export function Hero() {
                   </div>
                 </div>
               </div>
-
-              <div className="pt-6 border-t border-white/5 mt-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-gray-600 font-mono tracking-tighter">NETWORK_LOGGED</span>
-                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">v2.4.0</span>
-                </div>
-              </div>
             </div>
           </div>
 
