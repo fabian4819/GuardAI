@@ -1,0 +1,7 @@
+root: ./
+title: GuardAI
+description: Autonomous DeFi vault protection powered by Chainlink CRE
+
+structure:
+  readme: README.md
+  summary: SUMMARY.md

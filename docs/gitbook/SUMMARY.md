@@ -1,8 +1,3 @@
----
-cover: logo.svg
-coverY: 0
----
-
 # Table of Contents
 
 ## GETTING STARTED
