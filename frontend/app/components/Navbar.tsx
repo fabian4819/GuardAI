@@ -62,7 +62,9 @@ export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
         
           <div className="flex items-center gap-6">
             <motion.a
-              href="#"
+              href="https://guardai-2.gitbook.io/guardai-docs"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ opacity: 0.9, y: -1, scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest transition-all flex items-center gap-2 group hover:border-emerald-500/30 hover:bg-emerald-500/5 shadow-2xl"

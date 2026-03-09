@@ -37,7 +37,8 @@
 * [Live App](https://guard-ai-xi.vercel.app/)
 * [Pitch Deck](https://www.canva.com/design/DAHDYgX-PHU/ZCSCu6rO2O-lyFVSumlY7g/view?utm_content=DAHDYgX-PHU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h79c83f9697)
 * [Pitching & Demo Video](https://youtu.be/FKGZA5LRQms)
-* [GitHub Repository](https://github.com/fabian4819/VaultSentinel)
+* [Demo App](https://youtu.be/j6YYeRCWOkI)
+* [GitHub Repository](https://github.com/fabian4819/GuardAI)
 
 ## REFERENCE
 
