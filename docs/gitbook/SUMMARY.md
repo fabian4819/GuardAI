@@ -1,17 +1,42 @@
 # Table of Contents
 
-## 🛡️ GuardAI
+## 🚀 GETTING STARTED
 
 * [Introduction](README.md)
-* [Architecture](architecture.md)
+* [Problem Statement](problem-statement.md)
+* [Our Solution](our-solution.md)
 
-## 📦 Core Components
+## 🏗️ PLATFORM OVERVIEW
 
-* [Smart Contract — VaultSentinel](smart-contract.md)
-* [Chainlink CRE Workflow](cre-workflow.md)
+* [How It Works](how-it-works.md)
+* [System Architecture](architecture.md)
+* [User Roles](user-roles.md)
+
+## ⚡ CORE FEATURES
+
+* [Autonomous Risk Monitoring](feature-risk-monitoring.md)
+* [Emergency Auto-Withdrawal](feature-emergency-withdrawal.md)
+* [Live Risk Dashboard](feature-dashboard.md)
+
+## 📜 SMART CONTRACTS
+
+* [Contract Overview](smart-contract.md)
+* [Deployed Addresses](deployed-addresses.md)
+* [Function Reference](function-reference.md)
+
+## 🔧 TECHNICAL GUIDE
+
+* [Tech Stack](tech-stack.md)
+* [System Flow](system-flow.md)
+* [CRE Workflow](cre-workflow.md)
+* [Scripts Reference](scripts.md)
 * [Frontend](frontend.md)
 
-## 🚀 Developer Guide
+## 🔗 QUICK LINKS
 
-* [Getting Started](getting-started.md)
-* [Scripts Reference](scripts.md)
+* [GitHub Repository](https://github.com/fabian4819/VaultSentinel)
+* [CRE Workflow File](https://github.com/fabian4819/VaultSentinel/blob/main/cre/vault-sentinel-workflow.yaml)
+
+## 📖 REFERENCE
+
+* [Glossary](glossary.md)
